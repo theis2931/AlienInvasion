@@ -13,6 +13,12 @@ class Ship:
         self.image = pygame.image.load('game_assets/space_ship_1.bmp')
         self.rect = self.image.get_rect()
 
+        # set the size of the image
+        default_image_size = (55, 55)
+
+        # scale the image to your needed size
+        self.image = pygame.transform.scale(self.image, default_image_size)
+
         # Start each new ship at the bottem center of the screen.
         self.rect.midbottom = self.screen_rect.midbottom
 
