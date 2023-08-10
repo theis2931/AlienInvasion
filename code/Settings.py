@@ -6,5 +6,6 @@ class Settings:
         # screen settings
         self.screen_width = 1200
         self.screen_height = 800
-        self.bg_color = (230, 230, 230)
-
+        self.bg_color = (229, 204, 255)
+        # set the size of the image
+        self.default_image_size = (60, 60)
