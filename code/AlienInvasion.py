@@ -2,7 +2,7 @@ import sys
 import pygame
 
 from Settings import Settings
-from Ship import Ship
+from ship import Ship
 
 
 class AlienInvasion:

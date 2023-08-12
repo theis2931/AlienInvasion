@@ -1,7 +1,5 @@
 import pygame
 
-from Settings import Settings
-
 
 class Ship:
     """A class to manage the ship."""
@@ -13,14 +11,14 @@ class Ship:
         self.screen_rect = ai_game.screen.get_rect()
 
         # load the ship image and get its rect.
-        self.image = pygame.image.load('game_assets/space_ship_1.bmp')
+        self.image = pygame.image.load('game_assets/ship_1.bmp')
         self.rect = self.image.get_rect()
         # print(self.ship_image.get_rect())
 
-        # scale the image to fit the screen
+        # scale the image to fit the screen.
         # todo need to place the ship in the middle scale issue?
-        self.image = pygame.transform.scale(
-            self.image, self.settings.default_image_size)
+        # self.image = pygame.transform.scale(
+        #    self.image, self.settings.default_image_size)
 
         # Start each new ship at the bottem center of the screen.
         self.default_image_position = self.screen_rect
@@ -35,7 +33,7 @@ class Ship:
 
     def update(self):
         """Update the ship's position based on the movement flag"""
-        # todo line 39 stop before the corner scale issue
+        # todo line 39 stop before the corner then scale activated
         # update the ship's x position, not the rect
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
