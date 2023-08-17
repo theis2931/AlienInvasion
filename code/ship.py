@@ -7,22 +7,27 @@ class Ship:
     def __init__(self, ai_game):
         """initialize the ship and set its starting position."""
         self.screen = ai_game.screen
-        self.settings = ai_game.Settings
+        self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
         # load the ship image and get its rect.
-        self.image = pygame.image.load('game_assets/ship_1.bmp')
+        self.image = pygame.image.load('../game_assets/ship_1.bmp')
         self.rect = self.image.get_rect()
-        # print(self.ship_image.get_rect())
+        print(self.image.get_rect())
 
         # scale the image to fit the screen.
         # todo need to place the ship in the middle scale issue?
         # self.image = pygame.transform.scale(
-        #    self.image, self.settings.default_image_size)
+        #     self.image, self.settings.default_image_size)
 
         # Start each new ship at the bottem center of the screen.
-        self.default_image_position = self.screen_rect
-        self.rect.midbottom = self.screen_rect.midbottom
+        # self.default_image_position = self.screen_rect
+        # self.rect.midbottom = self.screen_rect.midbottom
+
+        # Set the rockets start position.
+        self.rect.x = 430
+        self.rect.y = 545
+        self.start_position = (self.rect.x, self.rect.y)
 
         # Store a decimal value for the ship's horizontal position
         self.x = float(self.rect.x)
