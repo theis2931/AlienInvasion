@@ -22,14 +22,21 @@ class AlienInvasion:
         # AlienInvasion. This parameter that gives ship access to the game
         self.Ship = Ship(self)
 
+        # creating a group with the sprites to ship animation
+        self.ship_group = pygame.sprite.Group()
+
         # https://www.pygame.org/docs/ref/sprite.html
         self.Bullets = pygame.sprite.Group()
+
+        # getting the pygame clock to handle fps
+        self.clock = pygame.time.Clock
 
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.Ship.update()
+            self.Ship.update_ship_sprite()
+            self.Ship.update_ship_position()
             self._update_bullet()
             self._update_screen()
 
@@ -90,7 +97,7 @@ class AlienInvasion:
         self.Ship.blit_me()
         # draw bullets to the screen
         for bullet in self.Bullets.sprites():
-            bullet.draw_bullet()
+            bullet.blit_bullet()
 
         pygame.display.flip()
 

@@ -9,43 +9,53 @@ class Ship:
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
+        super(Ship, self).__init__()
 
-        # load the ship image and get its rect.
-        self.image = pygame.image.load('../game_assets/ship_1.bmp')
-        self.rect = self.image.get_rect()
-        print(self.image.get_rect())
+        # add all the image to sprite array
+        self.images = []
+        self.images.append(pygame.image.load('../game_assets/ship_1.bmp'))
+        self.images.append(pygame.image.load('../game_assets/ship_2.bmp'))
+        self.images.append(pygame.image.load('../game_assets/ship_3.bmp'))
 
-        # scale the image to fit the screen.
-        # todo need to place the ship in the middle scale issue?
-        # self.image = pygame.transform.scale(
-        #     self.image, self.settings.default_image_size)
+        # index value to get the image from array
+        # initially/in the beginning it is 0
+        self.index = 0
 
-        # Start each new ship at the bottem center of the screen.
-        # self.default_image_position = self.screen_rect
-        # self.rect.midbottom = self.screen_rect.midbottom
+        # now the image we will display will be the index from the image array.
+        self.image = self.images[self.index]
 
-        # Set the rockets start position.
-        self.rect.x = 430
-        self.rect.y = 545
-        self.start_position = (self.rect.x, self.rect.y)
+        # creating a rect at position x,y (430, 545)
+        # of size (48, 48) which is the size of sprite/image
+        self.rect = pygame.Rect(430, 545, 41, 46)
 
-        # Store a decimal value for the ship's horizontal position
+        # Store a decimal value for the ship's horizontal position.
         self.x = float(self.rect.x)
 
-        # Movement flag
+        # Movement flag to move the ship
         self.moving_right = False
         self.moving_left = False
 
-    def update(self):
+    def update_ship_sprite(self):
+        """When the update method is called, we will increment the index."""
+        self.index += 1
+
+        # if the index is larger than total images
+        if self.index >= len(self.images):
+            # we will change the index to 0 again
+            self.index = 0
+
+        # update the image we will display
+        self.image = self.images[self.index]
+
+    def update_ship_position(self):
         """Update the ship's position based on the movement flag"""
-        # todo line 39 stop before the corner then scale activated
-        # update the ship's x position, not the rect
+        # update the ship's x value, not the rect.
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
         if self.moving_left and self.rect.left > 0:
             self.x -= self.settings.ship_speed
 
-        # update rect object from self.x
+    # Update rect object from self.x
         self.rect.x = self.x
 
     def blit_me(self):
