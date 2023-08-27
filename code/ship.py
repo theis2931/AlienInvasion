@@ -9,7 +9,6 @@ class Ship:
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
-        super(Ship, self).__init__()
 
         # add all the image to sprite array
         self.images = []

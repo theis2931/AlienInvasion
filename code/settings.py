@@ -8,8 +8,9 @@ class Settings:
         self.screen_height = 600
         self.bg_color = (229, 204, 255)
         self.default_image_size = (30, 30)  # set the size of the image
+        self.fps = 30
         # Ship settings
-        self.ship_speed = 0.5
+        self.ship_speed = 6.5
         # bullet settings
-        self.bullet_speed = 0.3
+        self.bullet_speed = 5.5
         self.bullets_allowed = 3

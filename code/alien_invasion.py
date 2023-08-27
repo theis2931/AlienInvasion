@@ -18,6 +18,9 @@ class AlienInvasion:
             self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
 
+        # Initialise the frame timing clock.
+        self.clock = pygame.time.Clock()
+
         # The self argument here refers to the current instance of
         # AlienInvasion. This parameter that gives ship access to the game
         self.Ship = Ship(self)
@@ -28,15 +31,12 @@ class AlienInvasion:
         # https://www.pygame.org/docs/ref/sprite.html
         self.Bullets = pygame.sprite.Group()
 
-        # getting the pygame clock to handle fps
-        self.clock = pygame.time.Clock
-
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.Ship.update_ship_sprite()
-            self.Ship.update_ship_position()
+            self._update_frame_time()
+            self._update_ship()
             self._update_bullet()
             self._update_screen()
 
@@ -68,6 +68,11 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.Ship.moving_left = False
 
+    def _update_ship(self):
+        """update ship sprites, and the ship position to the screen."""
+        self.Ship.update_ship_sprite()
+        self.Ship.update_ship_position()
+
     def _fire_bullet(self):
         """
         Create a new bullet, and add it to the bullets group.
@@ -87,6 +92,10 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.Bullets.remove(bullet)
         # print(len(self.Bullets))
+
+    def _update_frame_time(self):
+        """Use pygame.time.Clock.tick() to slow down to given framerate."""
+        self.clock.tick(self.settings.fps)
 
     def _update_screen(self):
         """update image on the screen, and flip to the new screen."""
