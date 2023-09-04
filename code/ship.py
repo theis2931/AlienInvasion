@@ -20,22 +20,25 @@ class Ship:
         # initially/in the beginning it is 0
         self.index = 0
 
-        # now the image we will display will be the index from the image array.
+        # now the image, we will display will be the index from the image array.
         self.image = self.images[self.index]
 
         # creating a rect at position x,y (430, 545)
-        # of size (48, 48) which is the size of sprite/image
+        # of size (41, 46) which is the size of sprite/image
         self.rect = pygame.Rect(430, 545, 41, 46)
 
         # Store a decimal value for the ship's horizontal position.
         self.x = float(self.rect.x)
 
-        # Movement flag to move the ship
+        # Movement flag to move the ship right and left
         self.moving_right = False
         self.moving_left = False
 
     def update_ship_sprite(self):
-        """When the update method is called, we will increment the index."""
+        """
+        When the update method is called, we will increment the index.
+        And change index to 0 if index larger than total image
+        """
         self.index += 1
 
         # if the index is larger than total images
@@ -51,7 +54,7 @@ class Ship:
         # update the ship's x value, not the rect.
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
-        if self.moving_left and self.rect.left > 0:
+        if self.moving_left and self.rect.left > 1:
             self.x -= self.settings.ship_speed
 
     # Update rect object from self.x
