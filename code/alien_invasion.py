@@ -4,6 +4,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 
 class AlienInvasion:
@@ -26,10 +27,16 @@ class AlienInvasion:
         self.Ship = Ship(self)
 
         # creating a group with the sprites to ship animation
+        # ? where is this in use?
         self.ship_group = pygame.sprite.Group()
 
         # https://www.pygame.org/docs/ref/sprite.html
         self.Bullets = pygame.sprite.Group()
+
+        # creating a group to handle all the aliens.
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -97,6 +104,23 @@ class AlienInvasion:
         """Use pygame.time.Clock.tick() to slow down to given framerate."""
         self.clock.tick(self.settings.fps)
 
+    def _create_fleet(self):
+        """Create the fleet of aliens"""
+        # make an alien and find the number of aliens in a row.
+        # spacing between each alien is equal to one alien width.
+        alien = Alien(self)
+        alien_width = alien.rect.width
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
+
+        # Create the first row of aliens.
+        for alien_number in range(number_aliens_x):
+            # Create an alien and place it in the row
+            alien = Alien(self)
+            alien.x = alien_width + 2 * alien_width * alien_number
+            alien.rect.x = alien.x
+            self.aliens.add(alien)
+
     def _update_screen(self):
         """update image on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
@@ -107,6 +131,8 @@ class AlienInvasion:
         # draw bullets to the screen
         for bullet in self.Bullets.sprites():
             bullet.blit_bullet()
+        # draw each element in the group alien
+        self.aliens.draw(self.screen)
 
         pygame.display.flip()
 
