@@ -6,7 +6,7 @@ class Settings:
         # screen settings
         self.screen_width = 900
         self.screen_height = 600
-        self.bg_color = (35, 35, 35)  # (229, 204, 255)
+        self.bg_color = (255, 255, 255)
         self.default_image_size = (30, 30)  # set the size of the image
         self.fps = 25
         # Ship settings

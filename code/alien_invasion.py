@@ -5,6 +5,7 @@ from settings import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from background import Background
 
 
 class AlienInvasion:
@@ -37,6 +38,9 @@ class AlienInvasion:
         self.aliens = pygame.sprite.Group()
 
         self._create_fleet()
+
+        # this get the background, from the Background class
+        self.BackGround = Background("../game_assets/bg.bmp", [0, 0])
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -110,7 +114,7 @@ class AlienInvasion:
         # spacing between each alien is equal to one alien width.
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
-        available_space_x = self.settings.screen_width - (2 * alien_width)
+        available_space_x = self.settings.screen_width - alien_width
         number_aliens_x = available_space_x // (2 * alien_width)
 
         # determine the number of rows of aliens that fit on the screen.
@@ -128,14 +132,16 @@ class AlienInvasion:
         """Create an alien and place it in the row"""
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
-        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.x = alien_width + 1.5 * alien_width * alien_number
         alien.rect.x = alien.x
-        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+        alien.rect.y = alien.rect.height + 1.5 * alien.rect.height * row_number
         self.aliens.add(alien)
 
     def _update_screen(self):
         """update image on the screen, and flip to the new screen."""
+        # fill bg color and load bg image from the class Background.
         self.screen.fill(self.settings.bg_color)
+        self.screen.blit(self.BackGround.image, self.BackGround.rect)
         # draw the ships rect on the screen
         # pygame.draw.rect(self.screen, (250, 0, 250), self.Ship.rect)
         # draw the spaceship
