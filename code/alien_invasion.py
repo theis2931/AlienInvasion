@@ -49,6 +49,7 @@ class AlienInvasion:
             self._update_frame_time()
             self._update_ship()
             self._update_bullet()
+            self._update_alien()
             self._update_screen()
 
     def _check_events(self):
@@ -79,6 +80,10 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.Ship.moving_left = False
 
+    def _update_frame_time(self):
+        """Use pygame.time.Clock.tick() to slow down to given framerate."""
+        self.clock.tick(self.settings.fps)
+
     def _update_ship(self):
         """update ship sprites, and the ship position to the screen."""
         self.Ship.update_ship_sprite()
@@ -104,9 +109,26 @@ class AlienInvasion:
                 self.Bullets.remove(bullet)
         # print(len(self.Bullets))
 
-    def _update_frame_time(self):
-        """Use pygame.time.Clock.tick() to slow down to given framerate."""
-        self.clock.tick(self.settings.fps)
+    def _update_alien(self):
+        """
+        Check if the fleet is at an edge, then
+        Update the position of all aliens in the fleet.
+        """
+        self._check_fleet_edge()
+        self.aliens.update()
+
+    def _check_fleet_edge(self):
+        """Respond appropriately if any aliens have reached an edge."""
+        for alien in self.aliens.sprites():
+            if alien.check_edge():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """Drop the entire fleet and change the fleet's direction."""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
 
     def _create_fleet(self):
         """Create the fleet of aliens"""
